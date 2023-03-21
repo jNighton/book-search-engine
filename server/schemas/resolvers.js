@@ -17,18 +17,11 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    // saveBook: {},
-    savebook: async (parent, { book }, context) => {
+    saveBook: async (parent, { book }, context) => {
       if (context.user) {
         return savedBook.findOneAndUpdate(
           { _id: context.user._id },
-          {
-            $addToSet: {
-              savedBooks: {
-                book
-              },
-            },
-          },
+          { $addToSet: {savedBooks: book} },
           { new: true }
         );
       }
